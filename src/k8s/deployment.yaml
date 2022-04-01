@@ -1,0 +1,33 @@
+# Deployment do Conversor de temperatura
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata: 
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: manoelmartins1980/api-conversao:v1
+
+---
+# Serviço do Conversor de temperatura
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  selector:
+    app: web
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 30000
+  type: NodePort
